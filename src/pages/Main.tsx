@@ -15,11 +15,10 @@ function Main(props: any){
         async function run(){
             while (!sensor){
                 await delay(1000);
-                activate();
+                callback(await watcher());
             }
         }
 
-        watcher(callback)
         run().then();
     },[state])
     let first = 0;

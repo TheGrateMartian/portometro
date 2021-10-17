@@ -1,27 +1,33 @@
-import {Gpio} from 'pigpio';
+import GPIO from 'rpi-gpio';
+import {delay} from '../util/delay';
+import * as util from 'util';
 
-const millisecondsPerCm = 1e6/34321;
+const trig = 6;
+const echo = 13;
+GPIO.setup(trig, GPIO.DIR_OUT);
+GPIO.setup(echo, GPIO.DIR_IN);
 
-const trigger = new Gpio(6, {mode: Gpio.OUTPUT});
-const echo = new Gpio(13, {mode: Gpio.INPUT, alert: true});
+GPIO.output(trig, false);
 
-trigger.digitalWrite(0);
-
-function watcher(callback: Function) {
-    let startTick: number;
-
-    echo.on('alert', (level: 0 | 1, tick: number) => {
-        if (level === 1) {
-            startTick = tick;
-        } else {
-            const diff = (tick >> 0) - (startTick >> 0);
-            callback(diff / 2 / millisecondsPerCm);
-        }
-    });
+async function watcher() {
+    GPIO.output(trig, true);
+    await delay(1);
+    GPIO.output(trig, false);
+    let start = 0;
+    let end = 0;
+    while (await r() === false){
+        start = Date.now();
+    }
+    while (await r() === true){
+        end = Date.now();
+    }
+    let duration = Math.round(end - start);
+    console.log(duration);
+    return duration;
+}
+async function r(): Promise<boolean | undefined> {
+    const getInput = util.promisify(GPIO.input);
+    return await getInput(echo);
 }
 
-function activate() {
-    trigger.trigger(10, 1);
-}
-
-export {watcher, activate};
+export {watcher};

@@ -4,7 +4,7 @@ import Analyze from '../containers/Analyze';
 import {useEffect, useState} from 'react';
 import { delay } from '../util/delay';
 import '../css/pages/Main.css';
-import { watcher, activate } from '../services/sensor';
+import { watcher } from '../services/sensor';
 
 function Main(props: any){
     const [state, setState] = useState(false);

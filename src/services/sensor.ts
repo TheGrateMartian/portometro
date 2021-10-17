@@ -1,35 +1,24 @@
-import GPIO from 'rpi-gpio';
 import {delay} from '../util/delay';
-import * as util from 'util';
+import {Gpio} from 'onoff';
 
-const trig = 6;
-const echo = 13;
-async function setup() {
-    const setup = util.promisify((channel: number, direction: any, cb: (arg0: Error | null | undefined, arg1: [value?: boolean | undefined]) => void) => GPIO.setup(channel, direction, (err, ...results) => cb(err, results)));
-    await setup(trig, GPIO.DIR_OUT);
-    await setup(echo, GPIO.DIR_IN);
-    await GPIO.output(trig, false);
-}
-
+const trig = new Gpio(6, 'out');
+const echo = new Gpio(13, 'in');
+trig.writeSync(0);
 async function watcher() {
-    await GPIO.output(trig, true);
+    await trig.writeSync(1);
     await delay(1);
-    await GPIO.output(trig, false);
+    await trig.writeSync(0);
     let start = 0;
     let end = 0;
-    while (await r() === false){
+    while (echo.readSync() === 0){
         start = Date.now();
     }
-    while (await r() === true){
+    while (echo.readSync() === 1){
         end = Date.now();
     }
     let duration = Math.round(end - start);
     console.log(duration);
     return duration;
 }
-async function r(): Promise<boolean | undefined> {
-    const getInput = util.promisify(GPIO.input);
-    return await getInput(echo);
-}
 
-export {watcher, setup};
+export {watcher};

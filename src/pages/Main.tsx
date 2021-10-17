@@ -4,6 +4,7 @@ import Analyze from '../containers/Analyze';
 import {useEffect, useState} from 'react';
 import { delay } from '../util/delay';
 import '../css/pages/Main.css';
+import { watcher, activate } from '../services/sensor';
 
 function Main(props: any){
     const [state, setState] = useState(false);
@@ -11,13 +12,37 @@ function Main(props: any){
     const [analyze, setAnalyze] = useState(false);
 
     useEffect(() => {
-        const run = async () => {
-            setAnalyze(true)
+        async function run(){
+            while (!sensor){
+                await delay(1000);
+                activate();
+            }
         }
+
+        watcher(callback)
         run().then();
     },[state])
+    let first = 0;
 
+    function callback(num: number){
+        if (sensor) return;
+        if (!first){
+            first = num;
+            return;
+        }
+        if (Math.abs(first - num) < 3) {
+            let average: number = Math.floor((first + num) / 2);
+            if (!analyze) {
+                setSensor(average);
+            } else {
+                setAnalyze(true);
+            }
+        }
+        first = num;
+    }
     function reset(){
+        setAnalyze(false);
+        setSensor(0);
         setState(!state);
     }
 

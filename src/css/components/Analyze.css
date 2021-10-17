@@ -1,0 +1,52 @@
+@import "../Theme.css";
+
+.analyze .box{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 40%;
+    border-radius: 10px;
+    animation: glow var(--analyze-shadow-duration) infinite alternate;
+    border: var(--analyze-boarder-color) solid var(--analyze-boarder-size);
+    background-color: var(--analyze-background-color);
+}
+
+@keyframes glow{
+    from{
+        -webkit-box-shadow:0 0 46px var(--analyze-shadow-color-primary);
+        -moz-box-shadow: 0 0 46px 31px var(--analyze-shadow-color-primary);
+        box-shadow: 0 0 46px 31px var(--analyze-shadow-color-primary);
+    }
+    to{
+        -webkit-box-shadow:0 0 46px 31px var(--analyze-shadow-color-secondary);
+        -moz-box-shadow: 0 0 46px 31px var(--analyze-shadow-color-secondary);
+        box-shadow: 0 0 46px 31px var(--analyze-shadow-color-secondary);
+    }
+}
+.analyze h1{
+    color: var(--text-title-color);
+    font-size: var(--text-title-size);
+    margin: 50px 0;
+}
+.analyze h2{
+    display: inline;
+    color: var(--text-secondary-color);
+    font-size: var(--text-medium-size);
+    margin-bottom: 30px;
+}
+.analyze p{
+    color: var(--text-secondary-color);
+    font-size: var(--text-medium-size);
+    margin-bottom: 30px;
+    animation: expand var(--analyze-text-animation-duration) infinite alternate;
+}
+@keyframes expand{
+    from{
+        font-size: var(--text-medium-size);
+    }
+    to{
+        font-size: var(--text-large-size);
+    }
+}

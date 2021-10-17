@@ -1,0 +1,30 @@
+@import "../Theme.css";
+
+.hidden{
+    z-index: 10;
+    animation: fade var(--transition-duration) linear;
+    visibility: hidden;
+}
+
+.container{
+    /* Position and size */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    /* Style */
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
+}
+
+@keyframes fade {
+    from{
+        visibility: visible;
+        opacity: 100%;
+    }
+    to{
+        opacity: 0;
+    }
+}

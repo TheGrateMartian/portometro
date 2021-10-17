@@ -5,8 +5,9 @@ import * as util from 'util';
 const trig = 6;
 const echo = 13;
 async function setup() {
-    await GPIO.setup(trig, GPIO.DIR_OUT);
-    await GPIO.setup(echo, GPIO.DIR_IN);
+    const setup = util.promisify((channel: number, direction: any, cb: (arg0: Error | null | undefined, arg1: [value?: boolean | undefined]) => void) => GPIO.setup(channel, direction, (err, ...results) => cb(err, results)));
+    await setup(trig, GPIO.DIR_OUT);
+    await setup(echo, GPIO.DIR_IN);
     await GPIO.output(trig, false);
 }
 

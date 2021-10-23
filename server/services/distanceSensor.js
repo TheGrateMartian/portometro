@@ -9,6 +9,7 @@ class distanceSensor {
         this.echo = new Gpio(13, {mode: Gpio.INPUT, alert: true});
         this.trigger.digitalWrite(0);
         this.watcher();
+        this.runner();
     }
 
     watcher(){
@@ -26,10 +27,10 @@ class distanceSensor {
 
     runner(){
         setInterval(() => {
-            console.log("RRR")
             this.trigger.trigger(10, 1);
         }, 1000);
     }
+
     get(){
         return this.result;
     }

@@ -26,6 +26,7 @@ class distanceSensor {
 
     runner(){
         setInterval(() => {
+            console.log("RRR")
             this.trigger.trigger(10, 1);
         }, 1000);
     }

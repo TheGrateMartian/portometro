@@ -19,6 +19,7 @@ class distanceSensor {
             } else {
                 const diff = (tick >> 0) - (startTick >> 0);
                 this.result = diff / 2 / millisecondsPerCm;
+                console.log(this.result);
             }
         });
     }

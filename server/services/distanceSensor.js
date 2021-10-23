@@ -23,5 +23,5 @@ async function activate() {
     trigger.trigger(10, 1);
     return (await watcher())
 }
-
+activate().then(r => { console.log(r) });
 exports.activate = activate;

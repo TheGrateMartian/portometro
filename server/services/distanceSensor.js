@@ -2,28 +2,34 @@ const { Gpio } = require('pigpio')
 
 const millisecondsPerCm = 1e6/34321;
 
-const trigger = new Gpio(6, {mode: Gpio.OUTPUT});
-const echo = new Gpio(13, {mode: Gpio.INPUT, alert: true});
-trigger.digitalWrite(0);
+class distanceSensor{
+    result = 0;
 
-function watcher()
- {
-    let startTick;
-    echo.on('alert', (level, tick) => {
-        if (level === 1) {
-            startTick = tick;
-        } else {
-            console.log("i")
-            const diff = (tick >> 0) - (startTick >> 0);
-            console.log(diff / 2 / millisecondsPerCm);
-        }
-    });
+    init(){
+        this.trigger = new Gpio(6, {mode: Gpio.OUTPUT});
+        this.echo = new Gpio(13, {mode: Gpio.INPUT, alert: true});
+        this.trigger.digitalWrite(0);
+    }
+
+    watcher(){
+        let startTick;
+        this.echo.on('alert', (level, tick) => {
+            if (level === 1) {
+                startTick = tick;
+            } else {
+                const diff = (tick >> 0) - (startTick >> 0);
+                this.result = diff / 2 / millisecondsPerCm;
+            }
+        });
+    }
+
+    runner(){
+        setInterval(() => {
+            this.trigger.trigger(10, 1);
+        }, 1000);
+    }
+
 }
-setInterval(() => {
-    trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-}, 1000);
-function activate() {
-    trigger.trigger(10, 1);
-}
-watcher()
-exports.activate = activate;
+const ds = new distanceSensor();
+ds.init();
+exports.distanceSensor = ds;

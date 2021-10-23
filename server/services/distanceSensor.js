@@ -8,13 +8,14 @@ trigger.digitalWrite(0);
 
 function watcher(callback) {
     let startTick;
-
+    console.log("r")
     echo.once('alert', (level, tick) => {
+        console.log("i")
         if (level === 1) {
             startTick = tick;
         } else {
             const diff = (tick >> 0) - (startTick >> 0);
-            return callback(diff / 2 / millisecondsPerCm)
+            return callback(diff / 2 / millisecondsPerCm);
         }
     });
 }

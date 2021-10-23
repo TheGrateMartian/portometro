@@ -4,6 +4,7 @@ import Analyze from '../containers/Analyze';
 import {useEffect, useState} from 'react';
 import { delay } from '../util/delay';
 import '../css/pages/Main.css';
+import fetch from 'node-fetch';
 
 function Main(props: any){
     const [state, setState] = useState(false);
@@ -13,7 +14,10 @@ function Main(props: any){
     useEffect(() => {
         async function run(){
             while (!sensor){
-
+                await delay(1000);
+                const data: any = await fetch('http://localhost:4000/api/distance');
+                if (data.result == null) continue;
+                callback(data.result);
             }
         }
         run().then();
@@ -21,6 +25,7 @@ function Main(props: any){
     let first = 0;
 
     function callback(num: number){
+        console.log(num);
         if (sensor) return;
         if (!first){
             first = num;

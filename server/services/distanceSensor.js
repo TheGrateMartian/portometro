@@ -3,12 +3,12 @@ const { Gpio } = require('pigpio')
 const millisecondsPerCm = 1e6/34321;
 
 class distanceSensor{
-    result = 0;
 
     init(){
         this.trigger = new Gpio(6, {mode: Gpio.OUTPUT});
         this.echo = new Gpio(13, {mode: Gpio.INPUT, alert: true});
         this.trigger.digitalWrite(0);
+        this.watcher();
     }
 
     watcher(){

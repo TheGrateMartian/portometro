@@ -5,7 +5,6 @@ const millisecondsPerCm = 1e6/34321;
 class distanceSensor {
 
     init(){
-        console.log("rasf");
         this.trigger = new Gpio(6, {mode: Gpio.OUTPUT});
         this.echo = new Gpio(13, {mode: Gpio.INPUT, alert: true});
         this.trigger.digitalWrite(0);
@@ -27,6 +26,7 @@ class distanceSensor {
 
     runner(){
         setInterval(() => {
+            console.log("rrr");
             this.trigger.trigger(10, 1);
         }, 1000);
     }

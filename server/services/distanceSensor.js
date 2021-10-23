@@ -22,8 +22,9 @@ function watcher(callback) {
 
 async function activate() {
     trigger.trigger(10, 1);
-    const r = util.promisify(watcher);
-    return (await r())
+    watcher(function (err, data){
+        console.log(data);
+    })
 }
 activate().then(r => { console.log(r) });
 exports.activate = activate;

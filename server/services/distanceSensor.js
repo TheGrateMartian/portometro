@@ -14,6 +14,7 @@ class distanceSensor{
     watcher(){
         let startTick;
         this.echo.on('alert', (level, tick) => {
+            console.log("r");
             if (level === 1) {
                 startTick = tick;
             } else {
@@ -27,6 +28,9 @@ class distanceSensor{
         setInterval(() => {
             this.trigger.trigger(10, 1);
         }, 1000);
+    }
+    get(){
+        return this.result;
     }
 
 }

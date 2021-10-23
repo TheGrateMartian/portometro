@@ -4,7 +4,7 @@ const {distanceSensor} = require('../services/distanceSensor');
 
 router.get('/', function(req, res, next) {
     res.json({
-        "r": distanceSensor.result
+        "r": distanceSensor.get()
     })
 });
 

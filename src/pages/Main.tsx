@@ -4,7 +4,6 @@ import Analyze from '../containers/Analyze';
 import {useEffect, useState} from 'react';
 import { delay } from '../util/delay';
 import '../css/pages/Main.css';
-import { watcher} from '../services/sensor';
 
 function Main(props: any){
     const [state, setState] = useState(false);
@@ -14,8 +13,7 @@ function Main(props: any){
     useEffect(() => {
         async function run(){
             while (!sensor){
-                await delay(1000);
-                callback(await watcher());
+
             }
         }
         run().then();

@@ -4,7 +4,7 @@ import Analyze from '../containers/Analyze';
 import {useEffect, useState} from 'react';
 import { delay } from '../util/delay';
 import '../css/pages/Main.css';
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 function Main(props: any){
     const [state, setState] = useState(false);
@@ -15,7 +15,7 @@ function Main(props: any){
         async function run(){
             while (!sensor){
                 await delay(1000);
-                const data: any = await fetch('http://localhost:4000/api/distance');
+                const data: any = await axios.get('http://localhost:4000/api/distance');
                 if (data.result == null) continue;
                 callback(data.result);
             }

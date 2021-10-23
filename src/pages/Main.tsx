@@ -25,8 +25,8 @@ function Main(props: any){
     let first = 0;
 
     function callback(num: number){
-        console.log(num);
         if (sensor) return;
+        if (num < 0 || num > 100)
         if (!first){
             first = num;
             return;

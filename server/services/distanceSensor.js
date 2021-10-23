@@ -1,5 +1,4 @@
 const { Gpio } = require('pigpio')
-const util = require('util');
 
 const millisecondsPerCm = 1e6/34321;
 
@@ -20,11 +19,11 @@ function watcher(callback) {
     });
 }
 
-async function activate() {
+function activate() {
     trigger.trigger(10, 1);
     watcher(function (err, data){
         console.log(data);
     })
 }
-activate().then(r => { console.log(r) });
+activate()
 exports.activate = activate;
